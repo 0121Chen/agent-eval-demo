@@ -3,8 +3,8 @@
 基于开源 LLM 工程平台 **Langfuse** 搭建的最小可用 Agent 评估链路：
 小米智能家居客服 Agent → 全链路追踪 → LLM-as-judge + 规则评分 → 人工标注规范。
 
-> 项目初衷：对应「生态链软件产品经理 - Agent 方向」实习 JD 的核心工作内容——
-> 评估 Agent 输出、沉淀标注规范、分析评估数据。
+> 项目初衷：实践 AI Agent 产品的核心工作——评估 Agent 输出质量、沉淀统一标注规范、
+> 用数据回答"这个 Agent 到底做得好不好"。
 
 ## 文件结构
 
@@ -13,7 +13,12 @@ agent-eval-demo/
 ├── kb.py            # FAQ 知识库 + 关键词检索
 ├── agent.py         # 客服 Agent（检索 → 生成，全程 Langfuse 追踪）
 ├── eval.py          # 测试集 + LLM-as-judge + 关键词命中评分
-├── 标注规范.md       # 人工标注规范（产品经理的核心交付物）
+├── annotate.py      # 人工标注辅助
+├── push_human.py    # 人工标注结果回传 Langfuse
+├── eval_results.json  # 评估结果数据
+├── 标注规范.md       # 人工标注规范（核心交付物）
+├── 一致性分析.md     # 人工标注 vs LLM-as-judge 一致性分析
+├── 运行Agent.bat / 运行评估.bat   # Windows 一键运行
 ├── requirements.txt
 └── .env.example     # 复制为 .env 并填写密钥
 ```
@@ -57,7 +62,8 @@ Scores 里能看到 `judge_score`（LLM 裁判分）和 `keyword_hit`（规则�
 ## 本地部署 Langfuse（可选进阶）
 
 ```bash
-# 在 langfuse 仓库目录（已 clone 到 Downloads\langfuse）
+git clone https://github.com/langfuse/langfuse.git
+cd langfuse
 docker compose up -d
 # 浏览器打开 http://localhost:3000，注册管理员账号
 ```
