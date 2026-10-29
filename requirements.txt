@@ -1,0 +1,2 @@
+langfuse>=2.50
+openai>=1.0
